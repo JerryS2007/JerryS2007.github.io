@@ -22,7 +22,7 @@ nav {
 h1 {
     display: flex;
     align-items: center;
-    color: white;
+    color: rgb(55, 0, 255);
     flex: 1;
     margin: 0;
 }
@@ -74,4 +74,31 @@ main {
 
 h2, h3 {
     margin: 0px;
+}
+
+
+/* Portfolio styles */
+.content h1 {
+  color: rgb(0, 4, 255);
+}
+
+#portfolio {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+#portfolio li {
+  background: #ff0000;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+#portfolio li:hover {
+  background: #fffb00;
+}
+
+#portfolio a {
+  text-decoration: none;
+  color: #00ff22;
 }
