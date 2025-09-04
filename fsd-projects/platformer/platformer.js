@@ -27,21 +27,23 @@ $(function () {
     //////////////////////////////////
 
     // TODO 1 - Enable the Grid
-    // toggleGrid();
+    toggleGrid();
 
 
     // TODO 2 - Create Platforms
-
-
-
+    createPlatform(500, 650, 200, 20, "blue");
+    createPlatform(250, 550, 200, 20, "green");
+    createPlatform(650, 350, 200, 20, "teal");
+    createPlatform(500, 650, 200, 20, "red");
+    createPlatform(500, 650, 200, 20, "pink");
 
     // TODO 3 - Create Collectables
+    createCollectable("diamond", 500, 450, -0.5, 1);
+    createCollectable("grace", 200, 500, 0.5, 1);
+    createCollectable("kennedi", 650, 350, 0, 1);
 
-
-
-    
     // TODO 4 - Create Cannons
-
+    createCannon("left",400,750);
 
     
     
@@ -51,4 +53,4 @@ $(function () {
   }
 
   registerSetup(setup);
-});
+  });
