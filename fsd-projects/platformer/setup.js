@@ -92,10 +92,10 @@ let halleImage;
 let animationDetails = {};
 
 var collectableList = {
-  database: { image: "images/collectables/database.png" },
-  diamond: { image: "images/collectables/diamond-head.png" },
-  grace: { image: "images/collectables/grace-head.png" },
-  kennedi: { image: "images/collectables/kennedi-head.png" },
-  max: { image: "images/collectables/max-head.png" },
-  steve: { image: "images/collectables/steve-head.png" },
+  database: { image: "images/collectables/Cheese.png" },
+  diamond: { image: "images/collectables/Green Bell Pepper.png" },
+  grace: { image: "images/collectables/Black Olives.png" },
+  kennedi: { image: "images/collectables/Pepperoni NEW.png" },
+  max: { image: "images/collectables/Sausage.png" },
+  steve: { image: "images/collectables/Hunts.png" },
 };
