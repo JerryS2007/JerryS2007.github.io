@@ -31,7 +31,6 @@ var init = function (window) {
         circles.push(circle);
         }
 
-
         // TODO 3 : Call the drawCircle() function
         
 
