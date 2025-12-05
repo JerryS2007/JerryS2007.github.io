@@ -19,47 +19,7 @@ var runLevels = function (window) {
     // TODOs 5 through 11 go here
     // BEGIN EDITING YOUR CODE HERE
 
-      function createObstacle(x, y, damage){
-        var hitZoneSize = 25; //size of the obstacles collision area
-        var damageFromObstacle = damage; //amount of damage the obstacle deals upon impact
-        var obstacleHitZone = game.createObstacle(hitZoneSize, damageFromObstacle);//creates obstacle and provides a hitzone size and damage
-        obstacleHitZone.x = x;//creates x position for the hitzone
-        obstacleHitZone.y = y;//creates y position for the hitzone
-        game.addGameItem(obstacleHitZone);//adds obstacle to the game
-        var obstacleImage = draw.bitmap("img/sawblade.png");//draws the obstacles image
-        obstacleHitZone.addChild(obstacleImage);//takes object picture and adds it as a child to the hitzone
-        obstacleImage.x = -25;//offets the image horizontally relatvie to the hit zone
-        obstacleImage.y = -25;//offets the image vertically relatvie to the hit zone
-
-        obstacleHitZone.rotationalVelocity = 5;
-
-      }
-
-      function createEnemy(x, y){
-        var enemy = game.createGameItem("enemy", 25);// stores enemy in the enemt variable and creates it in the game.
-        var enemyImage = draw.rect(50, 50, "red");//stores the enemy image
-        enemyImage.x = -25;//offset image for the image to the hitzone
-        enemyImage.y = -25;//offset image for the image to the hitzone
-        enemy.addChild(enemyImage);//takes enemy image and adds it as a child to the hitzone
-        enemy.x = x;//setting x enemy position
-        enemy.y = y;//setting y enemy position
-        game.addGameItem(enemy);//adds the enemy to the game
-
-        enemy.velocityX -= 3;//moving enemy across the screen
-        
-        //handles when hallebot collides with the enemy
-        enemy.onPlayerCollision = function(){
-          game.changeIntegrity(-10);//reduces player health
-        };
-
-        //handles when hallebot shoots the enemy
-        enemy.onProjectileCollision = function(){
-          game.increaseScore(100);//increases the player score
-          enemy.fadeOut();//makes the enemys disappear gradually whenever shot and killed
-        };
-      };
-
-        function createObstacle(x, y, damage, rotation, hitZoneSize, image, offsetX, offsetY, scale){
+    function createObstacle(x, y, damage, rotation, hitZoneSize, image, offsetX, offsetY, scaleX, scaleY){
           var hitZoneSize = hitZoneSize; //size of the obstacles collision area
           var damageFromObstacle = damage; //amount of damage the obstacle deals upon impact
           var obstacleHitZone = game.createObstacle(hitZoneSize, damageFromObstacle);//creates obstacle and provides a hitzone size and damage
@@ -68,48 +28,74 @@ var runLevels = function (window) {
           game.addGameItem(obstacleHitZone);//adds obstacle to the game
           var obstacleImage = draw.bitmap(image);//draws the obstacles image
           obstacleHitZone.addChild(obstacleImage);//takes object picture and adds it as a child to the hitzone
-          offsetX = offsetX;//offets the image horizontally relatvie to the hit zone
-          offsetY = offsetY;//offets the image vertically relatvie to the hit zone
-          obstacleImage.scaleX = scale;
-          obstacleImage.scaleY = scale;
+          obstacleImage.x = offsetX;//offets the image horizontally relatvie to the hit zone
+          obstacleImage.y = offsetY;//offets the image vertically relatvie to the hit zone
+          obstacleImage.scaleX = scaleX;
+          obstacleImage.scaleY = scaleY;
 
           obstacleHitZone.rotationalVelocity = rotation;
       }
 
-      function createReward(x, y){
-      var reward = game.createGameItem("reward", 25);// stores reward in the enemt variable and creates it in the game.
-        var rewardImage = draw.rect(50, 50, "blue");//stores the reward image
-        rewardImage.x = -25;//offset image for the image to the hitzone
-        rewardImage.y = -25;//offset image for the image to the hitzone
+      function createEnemy(x, y, image, offsetX, offsetY, score, hitZoneSize, damage, speed, scaleX, scaleY, image){
+        var enemy = game.createGameItem("enemy", hitZoneSize);// stores enemy in the enemt variable and creates it in the game.
+        var enemyImage = draw.bitmap(image);//stores the enemy image
+        enemyImage.x = offsetX;//offset image for the image to the hitzone
+        enemyImage.y = offsetY;//offset image for the image to the hitzone
+        enemy.addChild(enemyImage);//takes enemy image and adds it as a child to the hitzone
+        enemy.x = x;//setting x enemy position
+        enemy.y = y;//setting y enemy position
+        game.addGameItem(enemy);//adds the enemy to the game
+        enemyImage.scaleX = scaleX;
+        enemyImage.scaleY = scaleY;
+
+        enemy.velocityX -= speed;//moving enemy across the screen
+        
+        //handles when hallebot collides with the enemy
+        enemy.onPlayerCollision = function(){
+          game.changeIntegrity(damage);//reduces player health
+        };
+
+        //handles when hallebot shoots the enemy
+        enemy.onProjectileCollision = function(){
+          game.increaseScore(score);//increases the player score
+          enemy.fadeOut();//makes the enemys disappear gradually whenever shot and killed
+        };
+      };
+
+      function createReward(x, y, increaseHealth, velocityX, image, offsetX, offsetY, hitZoneSize){
+      var reward = game.createGameItem("reward", hitZoneSize);// stores reward in the enemt variable and creates it in the game.
+        var rewardImage = draw.bitmap(image);//stores the reward image
+        rewardImage.x = offsetX;//offset image for the image to the hitzone
+        rewardImage.y = offsetY;//offset image for the image to the hitzone
         reward.addChild(rewardImage);//takes reward image and adds it as a child to the hitzone
         reward.x = x;//setting x reward position
         reward.y = y;//setting y reward position
         game.addGameItem(reward);//adds the reward to the game
 
-        reward.velocityX -= 3;//moving reward across the screen
+        reward.velocityX -= velocityX;//moving reward across the screen
       
       //handles when hallebot collides with the reward
       reward.onPlayerCollision = function(){
-        game.changeIntegrity(10);//increases player health
+        game.changeIntegrity(increaseHealth);//increases player health
         reward.fadeOut();
         };
       };
 
-      function createLevelMarker(x,y){
-        var levelMarker = game.createGameItem("level marker", 25);// stores level in the enemt variable and creates it in the game.
-        var levelImage = draw.rect(50, 50, "yellow");//stores the level image
-        levelImage.x = -25;//offset image for the image to the hitzone
-        levelImage.y = -25;//offset image for the image to the hitzone
+      function createLevelMarker(x, y, increaseHealth, velocityX, image, offsetX, offsetY, hitZoneSize){
+        var levelMarker = game.createGameItem("level marker", hitZoneSize);// stores level in the enemt variable and creates it in the game.
+        var levelImage = draw.bitmap(image);//stores the level image
+        levelImage.x = offsetX;//offset image for the image to the hitzone
+        levelImage.y = offsetY;//offset image for the image to the hitzone
         levelMarker.addChild(levelImage);//takes level image and adds it as a child to the hitzone
         levelMarker.x = x;//setting x level position
         levelMarker.y = y;//setting y level position
         game.addGameItem(levelMarker);//adds the end of level to the game
 
-        levelMarker.velocityX -= 3;//moving level across the screen
+        levelMarker.velocityX -= velocityX;//moving level across the screen
       
       //handles when hallebot collides with the levelMarker
       levelMarker.onPlayerCollision = function(){
-        game.changeIntegrity(10);//increases player health
+        game.changeIntegrity(increaseHealth);//increases player health
         startLevel();
         levelMarker.fadeOut();
       };
@@ -124,10 +110,10 @@ var runLevels = function (window) {
         var element = levelObjects[i];
 
         if(element.type === "obstacle"){
-          createObstacle(element.x, element.y, element.damage, element.rotation, element.hitZoneSize, element.image, element.offsetX, element.offsetY, element.scale);
+          createObstacle(element.x, element.y, element.damage, element.rotation, element.hitZoneSize, element.image, element.offsetX, element.offsetY, element.scaleX, element.scaleY);
         }
         if(element.type === "enemy"){
-          createEnemy(element.x, element.y);
+          createEnemy(element.x, element.y, element.image, element.offsetX, element.offsetY, element.score, element.hitZoneSize, element.damage, element.speed, element.scaleX, element.scaleY, element.image);
         }
         if(element.type === "reward"){
           createReward(element.x, element.y);
