@@ -62,7 +62,7 @@ var runLevels = function (window) {
         };
       };
 
-      function createReward(x, y, increaseHealth, velocityX, image, offsetX, offsetY, hitZoneSize){
+      function createReward(x, y, increaseHealth, speed, image, offsetX, offsetY, hitZoneSize, scaleX, scaleY){
       var reward = game.createGameItem("reward", hitZoneSize);// stores reward in the enemt variable and creates it in the game.
         var rewardImage = draw.bitmap(image);//stores the reward image
         rewardImage.x = offsetX;//offset image for the image to the hitzone
@@ -71,8 +71,10 @@ var runLevels = function (window) {
         reward.x = x;//setting x reward position
         reward.y = y;//setting y reward position
         game.addGameItem(reward);//adds the reward to the game
+        rewardImage.scaleX = scaleX;
+        rewardImage.scaleY = scaleY;
 
-        reward.velocityX -= velocityX;//moving reward across the screen
+        reward.velocityX -= speed;//moving reward across the screen
       
       //handles when hallebot collides with the reward
       reward.onPlayerCollision = function(){
@@ -81,7 +83,7 @@ var runLevels = function (window) {
         };
       };
 
-      function createLevelMarker(x, y, increaseHealth, velocityX, image, offsetX, offsetY, hitZoneSize){
+      function createLevelMarker(x, y, increaseHealth, velocityX, image, offsetX, offsetY, hitZoneSize, scaleX, scaleY){
         var levelMarker = game.createGameItem("level marker", hitZoneSize);// stores level in the enemt variable and creates it in the game.
         var levelImage = draw.bitmap(image);//stores the level image
         levelImage.x = offsetX;//offset image for the image to the hitzone
@@ -90,6 +92,8 @@ var runLevels = function (window) {
         levelMarker.x = x;//setting x level position
         levelMarker.y = y;//setting y level position
         game.addGameItem(levelMarker);//adds the end of level to the game
+        levelMarkerImage.scaleX = scaleX;
+        levelMarkerImage.scaleY = scaleY;
 
         levelMarker.velocityX -= velocityX;//moving level across the screen
       
@@ -116,10 +120,10 @@ var runLevels = function (window) {
           createEnemy(element.x, element.y, element.image, element.offsetX, element.offsetY, element.score, element.hitZoneSize, element.damage, element.speed, element.scaleX, element.scaleY, element.image);
         }
         if(element.type === "reward"){
-          createReward(element.x, element.y);
+          createReward(element.x, element.y, element.increaseHealth, element.speed, element.image, element.offsetX, element.offsetY, element.hitZoneSize, element.scaleX, element.scaleY);
         }
         if (element.type === "levelMarker"){
-          createLevelMarker(element.x, element.y);
+          createLevelMarker(element.x, element.y, element.increaseHealth, element.velocityX, element.image, element.offsetX, element.offsetY, element.hitZoneSize, element.scaleX, element.scaleY );
         }
 
       }
