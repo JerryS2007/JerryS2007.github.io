@@ -83,7 +83,7 @@ var runLevels = function (window) {
         };
       };
 
-      function createLevelMarker(x, y, increaseHealth, velocityX, image, offsetX, offsetY, hitZoneSize, scaleX, scaleY){
+      function createLevelMarker(x, y, increaseHealth, speed, image, offsetX, offsetY, hitZoneSize, scaleX, scaleY){
         var levelMarker = game.createGameItem("level marker", hitZoneSize);// stores level in the enemt variable and creates it in the game.
         var levelImage = draw.bitmap(image);//stores the level image
         levelImage.x = offsetX;//offset image for the image to the hitzone
@@ -92,10 +92,10 @@ var runLevels = function (window) {
         levelMarker.x = x;//setting x level position
         levelMarker.y = y;//setting y level position
         game.addGameItem(levelMarker);//adds the end of level to the game
-        levelMarkerImage.scaleX = scaleX;
-        levelMarkerImage.scaleY = scaleY;
+        levelImage.scaleX = scaleX;
+        levelImage.scaleY = scaleY;
 
-        levelMarker.velocityX -= velocityX;//moving level across the screen
+        levelMarker.velocityX -= speed;//moving level across the screen
       
       //handles when hallebot collides with the levelMarker
       levelMarker.onPlayerCollision = function(){
@@ -123,9 +123,8 @@ var runLevels = function (window) {
           createReward(element.x, element.y, element.increaseHealth, element.speed, element.image, element.offsetX, element.offsetY, element.hitZoneSize, element.scaleX, element.scaleY);
         }
         if (element.type === "levelMarker"){
-          createLevelMarker(element.x, element.y, element.increaseHealth, element.velocityX, element.image, element.offsetX, element.offsetY, element.hitZoneSize, element.scaleX, element.scaleY );
+          createLevelMarker(element.x, element.y, element.increaseHealth, element.speed, element.image, element.offsetX, element.offsetY, element.hitZoneSize, element.scaleX, element.scaleY);
         }
-
       }
 
 
